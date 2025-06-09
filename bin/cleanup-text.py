@@ -19,6 +19,7 @@ Example:
 
 import argparse
 import os
+import os.path
 import re
 
 from unidecode import unidecode
@@ -71,6 +72,38 @@ def clean_text(text: str) -> str:
     return text
 
 
+def is_safe_path(path: str) -> bool:
+    """
+    Validate that a file path is safe to use.
+    
+    Args:
+        path (str): File path to validate
+        
+    Returns:
+        bool: True if path is safe, False otherwise
+    """
+    if not path:
+        return False
+    
+    # Normalize the path
+    normalized = os.path.normpath(path)
+    
+    # Check for directory traversal attempts
+    if '..' in normalized:
+        return False
+    
+    # Check for absolute paths that might escape intended directory
+    if os.path.isabs(normalized) and not normalized.startswith(os.getcwd()):
+        return False
+    
+    # Check for suspicious characters
+    suspicious_chars = ['|', '&', ';', '`', '$', '<', '>']
+    if any(char in path for char in suspicious_chars):
+        return False
+    
+    return True
+
+
 def main():
     """
     Main function that handles command-line interface and file processing.
@@ -96,10 +129,19 @@ def main():
 
     seen = set()
     for infile in args.infile:
+        # Skip empty arguments (from batch file padding)
+        if not infile:
+            continue
+            
         if infile in seen:
             print(f"[!] Skipping duplicate: {infile}")
             continue
         seen.add(infile)
+
+        # Security: Validate file path
+        if not is_safe_path(infile):
+            print(f"[✗] Unsafe file path rejected: {infile}")
+            continue
 
         try:
             with open(infile, "r", encoding="utf-8", errors="replace") as f:

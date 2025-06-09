@@ -34,7 +34,27 @@ The setup script will:
 
 ## Usage Options
 
-### 1. Batch File (Recommended for beginners)
+### 1. Web Interface (Recommended - Modern UI)
+
+```powershell
+# Launch the modern web interface
+.\unicodefix-web.bat
+
+# Or using PowerShell
+.\Start-UnicodeFix-Web.ps1
+
+# Or manually
+python run_web.py
+```
+
+The web interface provides:
+- Modern, clean UI with dark mode support
+- Drag-and-drop file upload
+- Real-time text cleaning
+- Copy and download results
+- Cross-platform compatibility
+
+### 2. Batch File (Command Line)
 
 ```powershell
 # Clean specific files
@@ -47,7 +67,7 @@ Get-Content input.txt | .\unicodefix.bat > cleaned.txt
 .\unicodefix.bat --help
 ```
 
-### 2. PowerShell Functions (After restarting PowerShell)
+### 3. PowerShell Functions (After restarting PowerShell)
 
 ```powershell
 # Using the unicodefix alias
@@ -60,7 +80,7 @@ cleanup-text file1.txt file2.txt
 Get-Content input.txt | unicodefix > cleaned.txt
 ```
 
-### 3. Windows Explorer Integration (Optional)
+### 4. Windows Explorer Integration (Optional)
 
 For right-click context menu integration:
 
@@ -117,35 +137,64 @@ unicodefix.bat file1.txt file2.txt
 
 ## Troubleshooting
 
-### "Execution of scripts is disabled" Error
+### Common Issues
 
-Run this command in PowerShell as Administrator:
+#### "cannot import name 'str' from 'typing'" Error
+This error occurs with Python 3.13+ due to changes in the typing module. 
+
+**Solution:**
 ```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine
+# Clear Python cache and restart
+Remove-Item -Recurse -Force __pycache__ -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force bin\__pycache__ -ErrorAction SilentlyContinue
+python run_web.py
 ```
 
-### "Python not found" Error
+#### NPM/Node.js Errors ("Could not read package.json")
+This is a Python project, not a Node.js project. **Do not run npm commands.**
 
-1. Install Python from [python.org](https://python.org)
-2. Make sure to check "Add Python to PATH" during installation
-3. Restart your terminal and try again
+The web interface uses:
+- Python FastAPI backend
+- CDN-hosted Tailwind CSS (no build process needed)
+- No Node.js or npm dependencies required
 
-### Virtual Environment Issues
-
-If the virtual environment becomes corrupted:
+**If you see npm errors:** You're in the wrong directory or running the wrong commands. Use Python commands instead:
 ```powershell
-# Remove the old environment
-Remove-Item venv -Recurse -Force
-
-# Recreate it
-.\setup.ps1 -Force
+# Correct commands for UnicodeFix
+python run_web.py              # Start web interface
+python test_web.py             # Test components
+.\unicodefix-web.bat           # Windows launcher
 ```
 
-### Context Menu Not Working
+#### Web Server Port Already in Use
+```powershell
+# Check what's using port 8000
+netstat -ano | findstr :8000
 
-1. Ensure you ran `setup-context-menu.ps1` as Administrator
-2. Try logging out and back in, or restart Windows
-3. Check that the paths in the registry entries are correct
+# Kill the process if needed (replace PID with actual process ID)
+taskkill /F /PID <PID>
+```
+
+#### Virtual Environment Issues
+```powershell
+# Recreate virtual environment
+Remove-Item -Recurse -Force venv
+.\setup.ps1
+```
+
+#### PowerShell Execution Policy
+```powershell
+# Allow script execution
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+```
+
+### Getting Help
+
+If you encounter issues:
+1. Run `python test_web.py` to verify components
+2. Check the troubleshooting section above
+3. Ensure you're using Python commands, not npm/Node.js
+4. Verify Python 3.8+ is installed and in PATH
 
 ## Features Specific to Windows
 

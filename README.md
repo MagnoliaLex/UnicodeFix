@@ -67,6 +67,38 @@ I also maintain a broader toolset for virtual environment management here: [Venv
 
 ## Usage
 
+### Web Interface (Recommended - Modern UI)
+
+UnicodeFix includes a modern web interface for easy use:
+
+**Windows:**
+```powershell
+# Launch web interface
+.\unicodefix-web.bat
+
+# Or using PowerShell
+.\Start-UnicodeFix-Web.ps1
+```
+
+**macOS/Linux:**
+```bash
+# Launch web interface
+python run_web.py
+
+# Or directly
+python web_app.py
+```
+
+The web interface provides:
+- Modern, clean UI with dark mode support
+- Drag-and-drop file upload
+- Real-time text cleaning with live preview
+- Copy and download cleaned results
+- Cross-platform compatibility
+- No command-line knowledge required
+
+### Command Line Interface
+
 Once installed and activated:
 
 ```bash
@@ -137,15 +169,30 @@ You can right-click one or more files and select a Quick Action to clean Unicode
 
 ## What's in This Repository
 
+**Web Interface:**
+- [web_app.py](web_app.py) — FastAPI web application with modern UI
+- [run_web.py](run_web.py) — Web application launcher
+- [bin/cleanup_text_module.py](bin/cleanup_text_module.py) — Core cleaning module for web interface
+- [static/app.js](static/app.js) — Frontend JavaScript functionality
+- [unicodefix-web.bat](unicodefix-web.bat) — Windows web interface launcher
+- [Start-UnicodeFix-Web.ps1](Start-UnicodeFix-Web.ps1) — PowerShell web interface launcher
+
+**Command Line Interface:**
 - [bin/cleanup-text.py](bin/cleanup-text.py) — Main cleaning script
 - [bin/cleanup-text](bin/cleanup-text) — Symlink for command-line usage (Unix/Linux)
 - [bin/cleanup-text.bat](bin/cleanup-text.bat) — Windows batch wrapper
+- [unicodefix.bat](unicodefix.bat) — Windows launcher (created by setup.ps1)
+
+**Setup and Configuration:**
 - [setup.sh](setup.sh) — Unix/Linux virtual environment setup script
 - [setup.ps1](setup.ps1) — Windows PowerShell setup script
-- [unicodefix.bat](unicodefix.bat) — Windows launcher (created by setup.ps1)
 - [requirements.txt](requirements.txt) — Python dependencies
+
+**Platform Integration:**
 - [macOS/](macOS/) — macOS Shortcut for Finder integration
 - [windows/](windows/) — Windows-specific files and context menu integration
+
+**Documentation and Examples:**
 - [data/](data/) — Example test files with Unicode artifacts
 - [docs/](docs/) — Documentation and screenshots
 - [README_Windows.md](README_Windows.md) — Windows-specific installation guide

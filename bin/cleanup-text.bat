@@ -21,8 +21,9 @@ if exist "venv\Scripts\activate.bat" (
     exit /b 1
 )
 
-REM Run the Python script with all passed arguments
-python bin\cleanup-text.py %*
+REM Run the Python script with properly quoted arguments
+REM Security: Limit to 9 arguments to prevent parameter injection
+python bin\cleanup-text.py "%~1" "%~2" "%~3" "%~4" "%~5" "%~6" "%~7" "%~8" "%~9"
 
 REM Deactivate virtual environment
 if defined VIRTUAL_ENV (

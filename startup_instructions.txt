@@ -1,45 +1,17 @@
 UnicodeFix - Startup Instructions
 ==================================
 
-Version 1 - Windows Compatibility Update (2025-12-08)
+Version 2 - Web Interface Update (2024-12-21)
 
-WINDOWS INSTALLATION:
-======================
+INSTALLATION:
+=============
 
-Prerequisites:
+Windows Prerequisites:
 - Python 3.8+ installed and in PATH
 - PowerShell 5.0+ (included in Windows 10/11)
 - Git (optional, for cloning)
 
-Installation Steps:
-1. Clone repository: git clone https://github.com/unixwzrd/UnicodeFix.git
-2. Navigate to directory: cd UnicodeFix
-3. Allow script execution: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
-4. Run setup: .\setup.ps1
-
-Optional Windows Explorer Integration:
-1. Run PowerShell as Administrator
-2. Execute: .\windows\setup-context-menu.ps1
-
-WINDOWS USAGE:
-==============
-
-Option 1 - Batch File (Easiest):
-- .\unicodefix.bat file1.txt file2.txt
-- Get-Content input.txt | .\unicodefix.bat > output.txt
-
-Option 2 - PowerShell Functions (After restart):
-- unicodefix file1.txt file2.txt
-- cleanup-text file1.txt file2.txt
-
-Option 3 - Context Menu (If installed):
-- Right-click file(s) → "Clean Unicode"
-- Right-click in folder → "Clean Unicode Files Here"
-
-MACOS/LINUX INSTALLATION:
-==========================
-
-Prerequisites:
+macOS/Linux Prerequisites:
 - Python 3.8+ installed
 - Bash shell
 - Git (optional)
@@ -47,34 +19,85 @@ Prerequisites:
 Installation Steps:
 1. Clone repository: git clone https://github.com/unixwzrd/UnicodeFix.git
 2. Navigate to directory: cd UnicodeFix
-3. Run setup: bash setup.sh
+3. Run appropriate setup:
+   - Windows: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser; .\setup.ps1
+   - macOS/Linux: bash setup.sh
 
-MACOS/LINUX USAGE:
-==================
+USAGE OPTIONS:
+==============
 
-Command Line:
-- cleanup-text file1.txt file2.txt
-- cat input.txt | cleanup-text > output.txt
+1. WEB INTERFACE (RECOMMENDED - Modern UI):
+============================================
+
+Windows:
+- Launch: .\unicodefix-web.bat
+- Or: .\Start-UnicodeFix-Web.ps1
+- Or: python run_web.py
+
+macOS/Linux:
+- Launch: python run_web.py
+- Or: python web_app.py
+
+Web Interface Features:
+- Modern, responsive UI with dark/light mode
+- Drag-and-drop file upload
+- Real-time text cleaning
+- Copy and download results
+- Cross-platform compatibility
+- No command-line knowledge required
+
+2. COMMAND LINE INTERFACE:
+==========================
+
+Windows:
+- Batch file: .\unicodefix.bat file1.txt file2.txt
+- PowerShell functions (after restart): unicodefix file1.txt file2.txt
+- Context menu (if installed): Right-click → "Clean Unicode"
+
+macOS/Linux:
+- Command line: cleanup-text file1.txt file2.txt
+- Pipe: cat input.txt | cleanup-text > output.txt
+- Vim: :%!cleanup-text
+
+3. PLATFORM INTEGRATIONS:
+==========================
+
+Windows Explorer Integration (Optional):
+1. Run PowerShell as Administrator
+2. Execute: .\windows\setup-context-menu.ps1
 
 macOS Finder Integration:
-- Import macOS/Strip Unicode.shortcut to Shortcuts app
-- Edit shortcut to point to your installation
-- Use Quick Actions in Finder
+1. Import macOS/Strip Unicode.shortcut to Shortcuts app
+2. Edit shortcut to point to your installation
+3. Use Quick Actions in Finder
+
+TESTING:
+========
+
+Verify Web Interface:
+- Run: python test_web.py
+- Expected: All tests pass
+
+Verify Command Line:
+- Windows: .\unicodefix.bat --help
+- macOS/Linux: cleanup-text --help
+- Expected: Usage information
 
 TROUBLESHOOTING:
 ================
 
-Windows:
-- "Execution disabled": Run Set-ExecutionPolicy as Administrator
+Web Interface:
+- "Module not found": Dependencies will auto-install on first run
+- "Port already in use": Another service is using port 8000
+- "Browser doesn't open": Access manually at http://localhost:8000
+
+Command Line:
+- Windows "Execution disabled": Run Set-ExecutionPolicy as Administrator
 - "Python not found": Install Python and ensure PATH is set
-- Context menu not working: Run setup-context-menu.ps1 as Administrator
+- macOS/Linux permission errors: Ensure setup.sh is executable
 
-macOS/Linux:
-- Virtual environment issues: Check .bashrc modifications
-- Permission errors: Ensure setup.sh is executable (chmod +x setup.sh)
-
-MANUAL EXECUTION (All Platforms):
-=================================
+MANUAL EXECUTION:
+=================
 
 Without setup scripts:
 1. Create virtual environment: python -m venv venv
@@ -82,14 +105,12 @@ Without setup scripts:
    - Windows: .\venv\Scripts\Activate.ps1
    - macOS/Linux: source venv/bin/activate
 3. Install dependencies: pip install -r requirements.txt
-4. Run script: python bin/cleanup-text.py [files...]
-5. Deactivate: deactivate
+4. For web interface: python run_web.py
+5. For command line: python bin/cleanup-text.py [files...]
+6. Deactivate: deactivate
 
-VERIFICATION:
+DEPENDENCIES:
 =============
 
-Test the installation:
-- Windows: .\unicodefix.bat --help
-- macOS/Linux: cleanup-text --help
-
-Expected output: Usage information showing command-line options 
+Core: Unidecode
+Web Interface: fastapi, uvicorn, python-multipart (auto-installed) 

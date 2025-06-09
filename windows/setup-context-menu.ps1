@@ -7,6 +7,16 @@ param(
 
 # Get the project root directory
 $ProjectRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
+
+# Security: Validate and sanitize the project root path
+if ($ProjectRoot -match '\.\.' -or $ProjectRoot -match '[&|;<>`]') {
+    Write-Error "Invalid or potentially unsafe path detected: $ProjectRoot"
+    Write-Error "Please ensure the script is running from a safe location."
+    exit 1
+}
+
+# Ensure path doesn't contain injection characters
+$ProjectRoot = $ProjectRoot -replace '[&|;<>`]', ''
 $UnicodeFix = Join-Path $ProjectRoot "unicodefix.bat"
 
 if (!(Test-Path $UnicodeFix)) {
