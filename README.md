@@ -23,6 +23,31 @@ This project was created to address the increasing frequency of invisible and ty
 
 ## Installation
 
+### Windows
+
+Clone the repository and run the PowerShell setup script:
+
+```powershell
+git clone https://github.com/unixwzrd/UnicodeFix.git
+cd UnicodeFix
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser  # If needed
+.\setup.ps1
+```
+
+The `setup.ps1` script:
+- Creates a dedicated Python virtual environment
+- Installs required dependencies
+- Creates a `unicodefix.bat` launcher
+- Adds PowerShell functions for easier usage
+
+For Windows Explorer integration (optional):
+```powershell
+# Run as Administrator
+.\windows\setup-context-menu.ps1
+```
+
+### macOS/Linux
+
 Clone the repository and run the setup script:
 
 ```bash
@@ -31,11 +56,10 @@ cd UnicodeFix
 bash setup.sh
 ```
 
-The \`setup.sh\` script:
-
+The `setup.sh` script:
 - Creates a dedicated Python virtual environment
 - Installs required dependencies
-- Adds startup configuration to your \`.bashrc\` for easier usage
+- Adds startup configuration to your `.bashrc` for easier usage
 
 You can review [setup.sh](setup.sh) to see exactly what is modified.
 
@@ -114,12 +138,17 @@ You can right-click one or more files and select a Quick Action to clean Unicode
 ## What's in This Repository
 
 - [bin/cleanup-text.py](bin/cleanup-text.py) — Main cleaning script
-- [bin/cleanup-text](bin/cleanup-text) — Symlink for command-line usage
-- [setup.sh](setup.sh) — Virtual environment setup script
+- [bin/cleanup-text](bin/cleanup-text) — Symlink for command-line usage (Unix/Linux)
+- [bin/cleanup-text.bat](bin/cleanup-text.bat) — Windows batch wrapper
+- [setup.sh](setup.sh) — Unix/Linux virtual environment setup script
+- [setup.ps1](setup.ps1) — Windows PowerShell setup script
+- [unicodefix.bat](unicodefix.bat) — Windows launcher (created by setup.ps1)
 - [requirements.txt](requirements.txt) — Python dependencies
 - [macOS/](macOS/) — macOS Shortcut for Finder integration
+- [windows/](windows/) — Windows-specific files and context menu integration
 - [data/](data/) — Example test files with Unicode artifacts
 - [docs/](docs/) — Documentation and screenshots
+- [README_Windows.md](README_Windows.md) — Windows-specific installation guide
 - [LICENSE](LICENSE) — License information
 - [README.md](README.md) — This file
 

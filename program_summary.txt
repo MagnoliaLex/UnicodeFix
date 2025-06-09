@@ -1,0 +1,61 @@
+UnicodeFix - Program Summary
+============================
+
+Version 1 - Windows Compatibility Update (2025-12-08)
+
+Purpose:
+UnicodeFix is a cross-platform Unicode text cleaning utility that normalizes problematic Unicode characters into clean ASCII equivalents. It addresses issues with invisible characters, typographic quotes, dashes, and other Unicode artifacts that can cause problems in code, configuration files, and document processing.
+
+Main Components:
+
+1. Core Python Script:
+   - bin/cleanup-text.py: Main Unicode cleaning logic with cross-platform support
+   - Handles file processing, STDIN/STDOUT pipes, and batch operations
+   - Uses Unidecode library for Unicode normalization
+   - Supports Windows CRLF and Unix LF line endings
+
+2. Platform-Specific Setup Scripts:
+   - setup.sh: Unix/Linux/macOS setup with bash and virtual environment
+   - setup.ps1: Windows PowerShell setup with automated configuration
+
+3. Windows Integration:
+   - unicodefix.bat: Windows launcher (auto-generated)
+   - bin/cleanup-text.bat: Windows batch wrapper
+   - windows/setup-context-menu.ps1: Explorer context menu installer
+   - windows/unicodefix-context-menu.reg: Manual registry template
+
+4. macOS Integration:
+   - macOS/Strip Unicode.shortcut: Finder Quick Action integration
+
+5. Documentation:
+   - README.md: Main documentation with platform-specific sections
+   - README_Windows.md: Comprehensive Windows guide
+   - CHANGELOG.md: Version history and feature updates
+
+Dependencies:
+- Python 3.8+ (required)
+- Unidecode library (automatically installed)
+- PowerShell 5.0+ (Windows only)
+- Bash shell (Unix/Linux/macOS only)
+
+Capabilities:
+- Cross-platform Unicode character normalization
+- Batch file processing
+- STDIN/STDOUT pipe support
+- GUI integration (Windows Explorer, macOS Finder)
+- Virtual environment management
+- Command-line aliases and functions
+- Automatic line ending normalization
+- Error handling and user-friendly messages
+
+Target Platforms:
+- Windows 10/11 (PowerShell-based)
+- macOS (bash-based with Shortcuts integration)
+- Linux distributions (bash-based)
+
+Use Cases:
+- Cleaning AI-generated text with Unicode artifacts
+- Processing configuration files with invisible characters
+- Normalizing text from various sources and platforms
+- Batch processing multiple files
+- Integration with text editors and IDEs 

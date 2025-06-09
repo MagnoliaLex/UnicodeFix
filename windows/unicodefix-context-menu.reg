@@ -1,0 +1,23 @@
+Windows Registry Editor Version 5.00
+
+; UnicodeFix Context Menu Integration
+; This adds "Clean Unicode" option to Windows Explorer right-click menu
+
+; For text files
+[HKEY_CLASSES_ROOT\*\shell\UnicodeFix]
+@="Clean Unicode"
+"Icon"="C:\\Windows\\System32\\shell32.dll,134"
+
+[HKEY_CLASSES_ROOT\*\shell\UnicodeFix\command]
+@="cmd /c \"cd /d \"%USERPROFILE%\\path\\to\\UnicodeFix\" && unicodefix.bat \"%1\" && pause\""
+
+; For multiple file selection
+[HKEY_CLASSES_ROOT\Directory\Background\shell\UnicodeFix]
+@="Clean Unicode Files Here"
+"Icon"="C:\\Windows\\System32\\shell32.dll,134"
+
+[HKEY_CLASSES_ROOT\Directory\Background\shell\UnicodeFix\command]
+@="powershell -WindowStyle Normal -Command \"cd '%V'; Get-ChildItem -File | ForEach-Object { & '%USERPROFILE%\\path\\to\\UnicodeFix\\unicodefix.bat' $_.FullName }; Read-Host 'Press Enter to close'\""
+
+; Note: You need to replace "%USERPROFILE%\\path\\to\\UnicodeFix" with your actual installation path
+; Example: "C:\\Users\\YourName\\Documents\\UnicodeFix" 

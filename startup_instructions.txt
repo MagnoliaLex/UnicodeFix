@@ -1,0 +1,95 @@
+UnicodeFix - Startup Instructions
+==================================
+
+Version 1 - Windows Compatibility Update (2025-12-08)
+
+WINDOWS INSTALLATION:
+======================
+
+Prerequisites:
+- Python 3.8+ installed and in PATH
+- PowerShell 5.0+ (included in Windows 10/11)
+- Git (optional, for cloning)
+
+Installation Steps:
+1. Clone repository: git clone https://github.com/unixwzrd/UnicodeFix.git
+2. Navigate to directory: cd UnicodeFix
+3. Allow script execution: Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+4. Run setup: .\setup.ps1
+
+Optional Windows Explorer Integration:
+1. Run PowerShell as Administrator
+2. Execute: .\windows\setup-context-menu.ps1
+
+WINDOWS USAGE:
+==============
+
+Option 1 - Batch File (Easiest):
+- .\unicodefix.bat file1.txt file2.txt
+- Get-Content input.txt | .\unicodefix.bat > output.txt
+
+Option 2 - PowerShell Functions (After restart):
+- unicodefix file1.txt file2.txt
+- cleanup-text file1.txt file2.txt
+
+Option 3 - Context Menu (If installed):
+- Right-click file(s) → "Clean Unicode"
+- Right-click in folder → "Clean Unicode Files Here"
+
+MACOS/LINUX INSTALLATION:
+==========================
+
+Prerequisites:
+- Python 3.8+ installed
+- Bash shell
+- Git (optional)
+
+Installation Steps:
+1. Clone repository: git clone https://github.com/unixwzrd/UnicodeFix.git
+2. Navigate to directory: cd UnicodeFix
+3. Run setup: bash setup.sh
+
+MACOS/LINUX USAGE:
+==================
+
+Command Line:
+- cleanup-text file1.txt file2.txt
+- cat input.txt | cleanup-text > output.txt
+
+macOS Finder Integration:
+- Import macOS/Strip Unicode.shortcut to Shortcuts app
+- Edit shortcut to point to your installation
+- Use Quick Actions in Finder
+
+TROUBLESHOOTING:
+================
+
+Windows:
+- "Execution disabled": Run Set-ExecutionPolicy as Administrator
+- "Python not found": Install Python and ensure PATH is set
+- Context menu not working: Run setup-context-menu.ps1 as Administrator
+
+macOS/Linux:
+- Virtual environment issues: Check .bashrc modifications
+- Permission errors: Ensure setup.sh is executable (chmod +x setup.sh)
+
+MANUAL EXECUTION (All Platforms):
+=================================
+
+Without setup scripts:
+1. Create virtual environment: python -m venv venv
+2. Activate environment:
+   - Windows: .\venv\Scripts\Activate.ps1
+   - macOS/Linux: source venv/bin/activate
+3. Install dependencies: pip install -r requirements.txt
+4. Run script: python bin/cleanup-text.py [files...]
+5. Deactivate: deactivate
+
+VERIFICATION:
+=============
+
+Test the installation:
+- Windows: .\unicodefix.bat --help
+- macOS/Linux: cleanup-text --help
+
+Expected output: Usage information showing command-line options 

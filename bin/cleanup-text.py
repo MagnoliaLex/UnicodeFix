@@ -28,9 +28,11 @@ def clean_text(text: str) -> str:
     """
     Normalize problematic or invisible Unicode characters to safe ASCII equivalents.
 
-    This function performs two main operations:
+    This function performs multiple operations:
     1. Converts typographic characters (quotes, dashes) to their ASCII equivalents
     2. Removes zero-width and invisible Unicode characters
+    3. Normalizes line endings for cross-platform compatibility
+    4. Removes trailing whitespace
 
     Args:
         text (str): The input text containing Unicode characters
@@ -46,15 +48,25 @@ def clean_text(text: str) -> str:
         '\u2018': "'", '\u2019': "'",  # Smart single quotes
         '\u201C': '"', '\u201D': '"',  # Smart double quotes
         '\u2013': '-', '\u2014': '-',  # En and em dashes
+        '\u2026': '...',  # Ellipsis
+        '\u00A0': ' ',    # Non-breaking space
     }
     for orig, repl in replacements.items():
         text = text.replace(orig, repl)
 
-    # Remove zero-width characters
-    text = re.sub(r'[\u200B\u200C\u200D\uFEFF]', '', text)
+    # Remove zero-width characters and other invisible characters
+    text = re.sub(r'[\u200B\u200C\u200D\uFEFF\u00AD]', '', text)
 
+    # Normalize line endings (convert all to \n, then to platform-specific)
+    text = text.replace('\r\n', '\n').replace('\r', '\n')
+    
     # Remove trailing whitespace on every line
-    text = re.sub(r'[ \t]+(\r?\n)', r'\1', text)
+    text = re.sub(r'[ \t]+\n', '\n', text)
+    
+    # Convert back to platform-specific line endings if needed
+    import os
+    if os.name == 'nt':  # Windows
+        text = text.replace('\n', '\r\n')
 
     return text
 
